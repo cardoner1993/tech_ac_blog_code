@@ -2,7 +2,7 @@ import numpy as np
 from functools import wraps
 from time import process_time
 import timeit
-from numba import njit, jit
+from numba import jit, njit
 
 
 def measure(func):
@@ -26,7 +26,9 @@ def fibonacci(n):
     else:
         return fibonacci(n - 1) + fibonacci(n - 2)
 
-# print(f"Running fibonacci. Took {timeit.timeit('fibonacci(35)', 'from __main__ import fibonacci', number=30)}")
+
+# print(f"Running fibonacci. Took "
+#       f"{timeit.timeit('fibonacci(35)', 'from __main__ import fibonacci', number=30)}")
 
 
 @jit(fastmath=True, cache=True, nopython=True)
@@ -35,6 +37,7 @@ def fibonacci_numba(n):
         return n
     else:
         return fibonacci_numba(n - 1) + fibonacci_numba(n - 2)
+
 
 # print(f"Running fibonacci numba. Took "
 #       f"{timeit.timeit('fibonacci_numba(35)', 'from __main__ import fibonacci_numba', number=30)}")
@@ -117,7 +120,7 @@ if __name__ == '__main__':
     #     print("Eval function search_min_np_jit")
     #     search_min_np_jit(data)
 
-    print("Running fibonacci")
-    print(timeit.timeit("fibonacci(35)", "from __main__ import fibonacci", number=30))
-    print("Running fibonacci numba")
-    print(timeit.timeit("fibonacci_numba(35)", "from __main__ import fibonacci_numba", number=30))
+    # print("Running fibonacci")
+    # print(timeit.timeit("fibonacci(35)", "from __main__ import fibonacci", number=30))
+    print(f"Running fibonacci numba. "
+          f"Took {timeit.timeit('fibonacci_numba(35)', 'from __main__ import fibonacci_numba', number=30)}")
